@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macletics — Mac's Sports Playground</title>
+<meta name="description" content="Macletics builds Mac's Sports Playground: sports statistics and prediction insights, coming soon to iOS and Android. A division of Mind of Mart.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0E1626;
+    --navy-2: #16223A;
+    --line: #24324D;
+    --white: #F4F7FB;
+    --muted: #9DA9BF;
+    --amber: #FFB302;
+    --amber-soft: rgba(255, 179, 2, 0.14);
+    --cobalt: #2E5BFF;
+    --win: #35D08E;
+    --radius: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* faint scoreboard grid across the page */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  header, main, footer { position: relative; z-index: 1; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  header { padding: 26px 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .wordmark {
+    font-family: "Sora", sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .wordmark .dot { color: var(--amber); }
+  .parent-link {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .parent-link:hover, .parent-link:focus-visible { color: var(--amber); }
+
+  /* ---------- Hero ---------- */
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+    padding-top: 56px;
+    padding-bottom: 88px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: "Sora", sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+  }
+  h1 .accent { color: var(--amber); }
+  .lede {
+    color: var(--muted);
+    font-size: 1.08rem;
+    max-width: 48ch;
+    margin-bottom: 32px;
+  }
+
+  .stores { display: flex; gap: 14px; flex-wrap: wrap; }
+  .store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--amber);
+    color: var(--navy);
+    text-decoration: none;
+    padding: 12px 22px 12px 18px;
+    border-radius: 14px;
+    transition: transform .18s ease, filter .18s ease;
+  }
+  .store-btn:hover, .store-btn:focus-visible { transform: translateY(-2px); filter: brightness(1.06); }
+  .store-btn svg { width: 26px; height: 26px; flex-shrink: 0; }
+  .store-btn .txt { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
+  .store-btn .small { font-size: 0.68rem; opacity: .8; letter-spacing: .04em; }
+  .store-btn .big { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1rem; }
+  /* coming-soon state: outlined, not clickable */
+  .store-btn.soon {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid var(--line);
+    cursor: default;
+  }
+  .store-btn.soon:hover { transform: none; filter: none; }
+  .store-btn.soon svg { color: var(--amber); }
+  .notify {
+    margin-top: 18px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .notify a { color: var(--amber); text-decoration: none; }
+  .notify a:hover, .notify a:focus-visible { text-decoration: underline; }
+
+  /* ---------- Scoreboard (signature) ---------- */
+  .board {
+    background: var(--navy-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,.6);
+  }
+  .board-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--amber);
+  }
+  .live::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .live::before { animation: none; } }
+
+  .matchup { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+  .team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .team .name {
+    font-family: "Sora", sans-serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .team .score {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--amber);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .predict-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .predict-bar {
+    display: flex;
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--line);
+    margin-bottom: 8px;
+  }
+  .predict-bar .home { background: var(--amber); width: 64%; }
+  .predict-bar .away { background: var(--cobalt); width: 36%; }
+  .predict-nums {
+    display: flex;
+    justify-content: space-between;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .predict-nums strong { color: var(--white); }
+
+  .stat-rows { border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .stat-row .val {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--white);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-row .val.up { color: var(--win); }
+
+  /* ---------- Features ---------- */
+  .features-section { padding-bottom: 88px; }
+  .section-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature {
+    background: var(--navy-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+  }
+  .feature h3 {
+    font-family: "Sora", sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  .feature h3 .tick {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    background: var(--amber);
+    margin-right: 9px;
+  }
+  .feature p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 40px 0; }
+  footer .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--amber); text-decoration: none; }
+  footer a:hover, footer a:focus-visible { text-decoration: underline; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 32px; padding-bottom: 56px; }
+    .features { grid-template-columns: 1fr; }
+  }
+
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="wordmark" href="/">Macletics<span class="dot">.</span></a>
+    <a class="parent-link" href="https://mindofmart.com">A Mind of Mart company ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Sports statistics &amp; predictions</p>
+        <h1>Mac's Sports <span class="accent">Playground</span></h1>
+        <p class="lede">
+          The numbers behind every game — live statistics and prediction insights,
+          coming soon to iPhone and Android.
+        </p>
+        <div class="stores">
+          <!-- When the app ships: turn these into <a href="..."> links, remove .soon class and the badge -->
+          <span class="store-btn soon" aria-label="Coming soon to the App Store">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="txt"><span class="small">Coming soon to the</span><span class="big">App Store</span></span>
+          </span>
+          <span class="store-btn soon" aria-label="Coming soon to Google Play">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+            <span class="txt"><span class="small">Coming soon to</span><span class="big">Google Play</span></span>
+          </span>
+        </div>
+        <p class="notify">
+          Want to know when it launches? Email
+          <a href="mailto:hello@mindofmart.com?subject=Notify%20me%20about%20Mac's%20Sports%20Playground">hello@mindofmart.com</a>
+        </p>
+      </div>
+
+      <!-- Signature: prediction scoreboard. Sample data — swap for a real matchup if you like -->
+      <div class="board" aria-label="Example of in-app prediction view">
+        <div class="board-head">
+          <span>Sneak peek</span>
+          <span class="live">Launching soon</span>
+        </div>
+        <div class="matchup">
+          <div class="team"><span class="name">Home Hawks</span><span class="score">98</span></div>
+          <div class="team"><span class="name">Away Wolves</span><span class="score">92</span></div>
+        </div>
+        <p class="predict-label">Win prediction</p>
+        <div class="predict-bar"><span class="home"></span><span class="away"></span></div>
+        <div class="predict-nums"><span><strong>64%</strong> Hawks</span><span>Wolves <strong>36%</strong></span></div>
+        <div class="stat-rows">
+          <div class="stat-row"><span>Field goal %</span><span class="val up">51.2</span></div>
+          <div class="stat-row"><span>Rebounds</span><span class="val">42 – 38</span></div>
+          <div class="stat-row"><span>Turnovers</span><span class="val">9 – 13</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="wrap">
+      <p class="section-label">Why Mac's Sports Playground</p>
+      <div class="features">
+        <div class="feature">
+          <h3><span class="tick"></span>Live statistics</h3>
+          <p><!-- EDIT to match your real feature set -->Scores, box stats, and team numbers as the game unfolds.</p>
+        </div>
+        <div class="feature">
+          <h3><span class="tick"></span>Prediction insights</h3>
+          <p><!-- EDIT -->Data-driven win probabilities and matchup breakdowns before tip-off.</p>
+        </div>
+        <div class="feature">
+          <h3><span class="tick"></span>Built for fans</h3>
+          <p><!-- EDIT -->Fast, clean, and focused — the numbers you want without the clutter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Macletics · a division of <a href="https://mindofmart.com">Mind of Mart</a></span>
+    <span><a href="mailto:hello@mindofmart.com">hello@mindofmart.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
