@@ -69,6 +69,9 @@
     transition: color .2s;
   }
   .parent-link:hover, .parent-link:focus-visible { color: var(--amber); }
+  .header-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .see-all { display: inline-block; margin-top: 26px; color: var(--amber); text-decoration: none; font-family: "IBM Plex Mono", monospace; font-size: 0.9rem; }
+  .see-all:hover, .see-all:focus-visible { text-decoration: underline; }
 
   /* ---------- Hero ---------- */
   .hero .wrap {
@@ -294,7 +297,10 @@
 <header>
   <div class="wrap">
     <a class="wordmark" href="/">Macletics<span class="dot">.</span></a>
-    <a class="parent-link" href="https://mindofmart.com">A Mind of Mart company ↗</a>
+    <span class="header-links">
+      <a class="parent-link" href="/playground/features/">Features</a>
+      <a class="parent-link" href="https://mindofmart.com">A Mind of Mart company ↗</a>
+    </span>
   </div>
 </header>
 
@@ -321,7 +327,7 @@
         </div>
         <p class="notify">
           Contact
-          <a href="mailto:hello@mindofmart.com?subject=Notify%20me%20about%20Mac's%20Sports%20Playground">administration@mindofmart.com</a>
+          <a href="mailto:administration@mindofmart.com?subject=Notify%20me%20about%20Mac's%20Sports%20Playground">administration@mindofmart.com</a>
         </p>
       </div>
 
@@ -352,18 +358,19 @@
       <p class="section-label">Why Mac's Sports Playground</p>
       <div class="features">
         <div class="feature">
-          <h3><span class="tick"></span>Live statistics</h3>
-          <p><!-- EDIT to match your real feature set -->Scores, box stats, and team numbers as the game unfolds.</p>
+          <h3><span class="tick"></span>Stats &amp; odds, side by side</h3>
+          <p>Live scores, box scores, player and team profiles, and lines from the major books, all in one place.</p>
         </div>
         <div class="feature">
-          <h3><span class="tick"></span>Prediction insights</h3>
-          <p><!-- EDIT -->Data-driven win probabilities and matchup breakdowns before tip-off.</p>
+          <h3><span class="tick"></span>Build your own pick lockers</h3>
+          <p>Write the recipe your picks must match, backtest it against past seasons, and let the locker find picks every day.</p>
         </div>
         <div class="feature">
-          <h3><span class="tick"></span>Built for fans</h3>
-          <p><!-- EDIT -->Fast, clean, and focused — the numbers you want without the clutter.</p>
+          <h3><span class="tick"></span>An AI buddy that knows the numbers</h3>
+          <p>Ask anything about a game, a player or your picks. Answers come from real data, not guesses.</p>
         </div>
       </div>
+      <a class="see-all" href="/playground/features/">See every feature, level by level →</a>
     </div>
   </section>
 </main>

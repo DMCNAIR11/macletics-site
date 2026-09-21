@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features — Mac's Sports Playground</title>
+<meta name="description" content="Every feature in Mac's Sports Playground, level by level: stats, odds analysis, pick lockers, backtesting, your AI buddy, and add-on packs.">
+<link rel="canonical" href="https://macletics.com/playground/features/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  FEATURES ONLY. This page is linked from the in-app paywall (MembershipScreen
+  "See every feature in detail"), so it must never show prices or a way to buy
+  outside the App Store / Google Play. Keep it that way.
+
+  Source of truth for every number here: src/config/tierCapabilities.js in the
+  app, checked against the server (coin_config.py / rate_limits.py).
+  Last verified 2026-09-21.
+-->
+<style>
+  :root {
+    --navy: #0E1626;
+    --navy-2: #16223A;
+    --navy-3: #1B2945;
+    --line: #24324D;
+    --white: #F4F7FB;
+    --muted: #9DA9BF;
+    --amber: #FFB302;
+    --amber-soft: rgba(255, 179, 2, 0.14);
+    --cobalt: #2E5BFF;
+    --cobalt-soft: rgba(46, 91, 255, 0.18);
+    --win: #35D08E;
+    --violet: #B28CFF;
+    --radius: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  header, main, footer { position: relative; z-index: 1; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 480px) { .wrap { padding: 0 16px; } }
+
+  /* ---------- Header ---------- */
+  header { padding: 26px 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .wordmark {
+    font-family: "Sora", sans-serif; font-weight: 800; font-size: 1.2rem;
+    letter-spacing: -0.01em; color: var(--white); text-decoration: none;
+  }
+  .wordmark .dot { color: var(--amber); }
+  .nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  .nav a {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
+    color: var(--muted); text-decoration: none; transition: color .2s;
+  }
+  .nav a:hover, .nav a:focus-visible, .nav a[aria-current="page"] { color: var(--amber); }
+
+  /* ---------- Type ---------- */
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: "Sora", sans-serif; font-weight: 800;
+    font-size: clamp(2.1rem, 5vw, 3.1rem); line-height: 1.1;
+    letter-spacing: -0.025em; margin-bottom: 20px;
+  }
+  h1 .accent { color: var(--amber); }
+  h2 {
+    font-family: "Sora", sans-serif; font-weight: 700;
+    font-size: clamp(1.45rem, 3vw, 1.9rem); letter-spacing: -0.02em;
+    line-height: 1.2; margin-bottom: 10px;
+  }
+  h3 { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
+  .lede { color: var(--muted); font-size: 1.08rem; max-width: 60ch; }
+  .section-intro { color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
+  section { padding-bottom: 80px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: 40px; padding-bottom: 56px; }
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .jump a {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.8rem;
+    color: var(--white); text-decoration: none;
+    border: 1px solid var(--line); background: var(--navy-2);
+    border-radius: 999px; padding: 7px 14px; transition: border-color .2s, color .2s;
+  }
+  .jump a:hover, .jump a:focus-visible { border-color: var(--amber); color: var(--amber); }
+
+  /* ---------- Level chips ---------- */
+  .chip {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; border-radius: 6px; padding: 3px 8px;
+    white-space: nowrap; vertical-align: middle;
+  }
+  .chip.free   { background: rgba(53, 208, 142, .14); color: var(--win); }
+  .chip.baller { background: var(--cobalt-soft); color: #8FA8FF; }
+  .chip.fran   { background: var(--amber-soft); color: var(--amber); }
+  .chip.capper { background: rgba(178, 140, 255, .16); color: var(--violet); }
+  .chip.pack   { background: rgba(255,255,255,.08); color: var(--white); }
+  .chip.beta   { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+
+  /* ---------- Levels ---------- */
+  .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .level {
+    background: var(--navy-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px 22px;
+    display: flex; flex-direction: column; gap: 14px;
+    border-top-width: 4px;
+  }
+  .level.free   { border-top-color: var(--win); }
+  .level.baller { border-top-color: var(--cobalt); }
+  .level.fran   { border-top-color: var(--amber); }
+  .level.capper { border-top-color: var(--violet); }
+  .level h3 { font-size: 1.2rem; }
+  .level .tag { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--muted); }
+  .level ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .level li { font-size: 0.93rem; color: var(--muted); padding-left: 18px; position: relative; }
+  .level li::before {
+    content: ""; position: absolute; left: 0; top: .62em;
+    width: 8px; height: 8px; border-radius: 2px; background: var(--amber);
+  }
+  .level li strong { color: var(--white); font-weight: 500; }
+
+  /* ---------- Feature groups ---------- */
+  .group { margin-bottom: 44px; }
+  .group-head {
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--line); padding-bottom: 12px;
+  }
+  .group-head .num { font-family: "IBM Plex Mono", monospace; color: var(--amber); font-size: 0.85rem; }
+  .group-head h3 { font-size: 1.2rem; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feature {
+    background: var(--navy-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 22px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .feature .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .feature p { color: var(--muted); font-size: 0.93rem; }
+
+  /* ---------- Compare table ---------- */
+  .table-scroll {
+    overflow-x: auto; border: 1px solid var(--line);
+    border-radius: var(--radius); background: var(--navy-2);
+    -webkit-overflow-scrolling: touch;
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 0.92rem; }
+  caption { text-align: left; padding: 16px 18px 0; color: var(--muted); font-size: 0.85rem; }
+  th, td { padding: 11px 16px; text-align: center; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  thead th {
+    font-family: "Sora", sans-serif; font-weight: 700; font-size: 0.9rem;
+    position: sticky; top: 0; background: var(--navy-3);
+  }
+  thead th.free   { color: var(--win); }
+  thead th.baller { color: #8FA8FF; }
+  thead th.fran   { color: var(--amber); }
+  thead th.capper { color: var(--violet); }
+  tbody th {
+    font-weight: 400; color: var(--muted); text-align: left;
+  }
+  tbody tr.cat th {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.72rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--amber);
+    background: rgba(255,255,255,.02); padding-top: 16px;
+  }
+  td { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  td .cell-sub { display: block; font-size: 0.74rem; color: var(--muted); white-space: nowrap; }
+  td.yes { color: var(--win); }
+  td.no  { color: #56627A; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+
+  /* ---------- Packs ---------- */
+  .packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .pack {
+    background: linear-gradient(180deg, var(--navy-3), var(--navy-2));
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .pack p { color: var(--muted); font-size: 0.93rem; }
+  .pack .who { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--white); margin-top: auto; padding-top: 8px; }
+
+  /* ---------- Notes ---------- */
+  .notes {
+    background: var(--navy-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px 26px;
+  }
+  .notes ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .notes li { color: var(--muted); font-size: 0.92rem; padding-left: 18px; position: relative; }
+  .notes li::before { content: "·"; position: absolute; left: 4px; color: var(--amber); font-weight: 700; }
+  .notes a { color: var(--amber); }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 40px 0; }
+  footer .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 0.9rem;
+  }
+  footer a { color: var(--amber); text-decoration: none; }
+  footer a:hover, footer a:focus-visible { text-decoration: underline; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .levels { grid-template-columns: repeat(2, 1fr); }
+    .features, .packs { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .levels, .features, .packs { grid-template-columns: 1fr; }
+    .hero { padding-top: 16px; }
+  }
+
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="wordmark" href="/">Macletics<span class="dot">.</span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/playground/features/" aria-current="page">Features</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Mac's Sports Playground · Features</p>
+      <h1>Everything in the <span class="accent">Playground</span></h1>
+      <p class="lede">
+        Stats, odds analysis, pick lockers you build yourself, backtesting across
+        past seasons, and an AI buddy that knows the numbers. Here's what every
+        level includes.
+      </p>
+      <nav class="jump" aria-label="On this page">
+        <a href="#levels">The four levels</a>
+        <a href="#features">Every feature</a>
+        <a href="#compare">Compare levels</a>
+        <a href="#packs">Add-on packs</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ LEVELS ============ -->
+  <section id="levels">
+    <div class="wrap">
+      <p class="eyebrow">The four levels</p>
+      <h2>Start free. Level up when you want more.</h2>
+      <p class="section-intro">Every level gets the full AI buddy, stats for every team and player, and pick lockers. Higher levels go deeper.</p>
+
+      <div class="levels">
+        <article class="level free">
+          <div>
+            <h3>Role Player</h3>
+            <span class="tag">Free · ad-supported</span>
+          </div>
+          <ul>
+            <li><strong>AI buddy</strong> at Know-It-All level, powered by MacRAG</li>
+            <li><strong>600+ seasons</strong> of player &amp; team stats (ad-supported)</li>
+            <li><strong>2 lockers</strong> with 150+ recipe stat fields</li>
+            <li><strong>2-season</strong> team backtests</li>
+            <li>1 slip scan a day (beta)</li>
+          </ul>
+        </article>
+
+        <article class="level baller">
+          <div>
+            <h3>Baller</h3>
+            <span class="tag">Ad-free</span>
+          </div>
+          <ul>
+            <li><strong>Wizard</strong> buddy with standard memory</li>
+            <li><strong>Advanced stats &amp; trends</strong>, every season</li>
+            <li><strong>10 lockers</strong>, 1,000+ recipe fields, player &amp; team props</li>
+            <li><strong>5-season</strong> team and player backtests</li>
+            <li>Can add Reports, DFS Pass &amp; Pick Champion</li>
+          </ul>
+        </article>
+
+        <article class="level fran">
+          <div>
+            <h3>The Franchise</h3>
+            <span class="tag">Ad-free</span>
+          </div>
+          <ul>
+            <li><strong>Deity</strong> buddy with advanced memory, 2,000 chats a month</li>
+            <li><strong>EV% on every price</strong>, de-vigged</li>
+            <li><strong>Contracts</strong> &amp; personalized news</li>
+            <li><strong>30 lockers</strong> with 2,000+ recipe fields</li>
+            <li><strong>10-season</strong> team backtests</li>
+          </ul>
+        </article>
+
+        <article class="level capper">
+          <div>
+            <h3>Capper's Delight</h3>
+            <span class="tag">Ad-free · everything</span>
+          </div>
+          <ul>
+            <li>Everything in The Franchise, plus the <strong>+EV Finder board</strong></li>
+            <li><strong>6,000 chats</strong> a month and maximum buddy memory</li>
+            <li><strong>75 lockers</strong> with 2,500+ recipe fields</li>
+            <li><strong>20-season</strong> team backtests</li>
+            <li>Team payrolls &amp; league salary ranks · Pick Champion included</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features">
+    <div class="wrap">
+      <p class="eyebrow">Every feature</p>
+      <h2>What's inside</h2>
+      <p class="section-intro">The chip on each card shows the first level that gets the feature. Every level above it gets it too.</p>
+
+      <div class="group">
+        <div class="group-head"><span class="num">01</span><h3>Sports data &amp; live games</h3></div>
+        <div class="features">
+          <div class="feature">
+            <div class="top"><h3>Live scores &amp; box scores</h3><span class="chip free">Free</span></div>
+            <p>Real-time scores, full box scores and play-by-play. Free members watch a short ad to open a live game.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Matchup previews</h3><span class="chip free">Free</span></div>
+            <p>Head-to-head history, recent form, injuries and the numbers that decide a game.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Player &amp; team profiles</h3><span class="chip free">Free</span></div>
+            <p>Careers, game logs, season stats, schedules and rankings across 600+ seasons of history on every level. On Free, watch a quick ad to open seasons beyond the latest three.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Injury tracker</h3><span class="chip free">Free</span></div>
+            <p>Who's in, out or questionable across every team, wired into matchups.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Advanced stats &amp; trends</h3><span class="chip baller">Baller</span></div>
+            <p>Efficiency and usage metrics, plus last-5, last-10 and season splits that show how a player is actually trending.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Salary &amp; contracts</h3><span class="chip fran">Franchise</span></div>
+            <p>Multi-year contracts on every player. Capper's Delight adds team payroll pages and league-wide salary ranks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span class="num">02</span><h3>Odds &amp; analysis</h3></div>
+        <div class="features">
+          <div class="feature">
+            <div class="top"><h3>Odds boards</h3><span class="chip free">Free</span></div>
+            <p>Game and player lines from the major books side by side, so you can see the best number at a glance.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Line history &amp; futures</h3><span class="chip free">Free</span></div>
+            <p>Open-to-close line movement, plus championship, MVP and win-total markets.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Pick tracking</h3><span class="chip free">Free</span></div>
+            <p>Log singles and parlays, get them graded automatically, and keep a full win-loss record.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Photo slip scanning</h3><span><span class="chip beta">Beta</span> <span class="chip free">Free · 21+</span></span></div>
+            <p>Snap a photo of a slip and every leg is filled in for you to review. 1 scan a day on Free, rising to 10, 20 and 30 a day by level. In beta, so check each leg before you save.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>EV% on every price</h3><span class="chip fran">Franchise</span></div>
+            <p>De-vigged expected value on every price, measured against the sharp book you choose.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>+EV Finder board</h3><span class="chip capper">Capper's</span></div>
+            <p>The whole slate scanned for positive-edge picks, sorted by edge, filterable by sport, market and book.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span class="num">03</span><h3>Lockers &amp; backtesting</h3></div>
+        <div class="features">
+          <div class="feature">
+            <div class="top"><h3>Pick lockers</h3><span class="chip free">Free</span></div>
+            <p>Your own pick systems. Write the recipe your picks must match, and the locker finds them every day, with no limit on how many. Build one three ways: quick TLDR, the full wizard, or by chatting with the Trainer. Picks you add by hand are limited by level.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Recipe stat fields</h3><span class="chip free">Free</span></div>
+            <p>Build on 150+ season-tagged stat fields on Free, then 1,000+, 2,000+ and 2,500+ as you level up.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Props lockers</h3><span class="chip baller">Baller</span></div>
+            <p>Build systems around player and team props, not just sides and totals.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Backtest Lab</h3><span class="chip free">Free</span></div>
+            <p>Run any recipe against real past seasons before you trust it: 2 seasons on Free, then 5, 10 and 20. Player backtests start at Baller.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Locker marketplace</h3><span class="chip free">Free</span></div>
+            <p>Publish your lockers, see how others rank, and follow the ones you like with subscription coins.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Locker appearance</h3><span class="chip free">Free</span></div>
+            <p>Colors, themes, icons and skins to make every locker look like yours.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span class="num">04</span><h3>Your AI buddy</h3></div>
+        <div class="features">
+          <div class="feature">
+            <div class="top"><h3>Ask anything</h3><span class="chip free">Free</span></div>
+            <p>A sports buddy powered by our MacRAG knowledge system on every level. Answers come from real data, not guesses. On Free, a quick ad every 10 messages keeps the chat going.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Brain levels</h3><span class="chip free">Free</span></div>
+            <p>Know-It-All on Free, Wizard at Baller, Deity at The Franchise and up. Smarter answers and more tools as you climb.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Memory</h3><span class="chip baller">Baller</span></div>
+            <p>Your buddy remembers your teams, players and habits. Standard memory at Baller, advanced at The Franchise, maximum at Capper's Delight.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Buddy characters</h3><span class="chip free">Free</span></div>
+            <p>Start with a free buddy and unlock more characters in the Store, each with its own art and personality.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Daily brief</h3><span class="chip free">Free</span></div>
+            <p>A personal rundown of your teams, your picks and today's slate.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Personalized news</h3><span class="chip fran">Franchise</span></div>
+            <p>Everyone gets the daily news feed. At The Franchise you tune it to your teams, players and picks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span class="num">05</span><h3>Coins, social &amp; your home screen</h3></div>
+        <div class="features">
+          <div class="feature">
+            <div class="top"><h3>Coin wallet</h3><span class="chip free">Free</span></div>
+            <p>Earn MAC coins from missions and activity. Backtest coins refill every day, and subscription coins let you follow marketplace lockers.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Friends &amp; chat</h3><span class="chip free">Free</span></div>
+            <p>Friend requests, direct messages and group chat rooms.</p>
+          </div>
+          <div class="feature">
+            <div class="top"><h3>Your dashboard</h3><span class="chip free">Free</span></div>
+            <p>Pin shortcuts to the tools you use most. Capper's Delight gets a bigger grid.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARE ============ -->
+  <section id="compare">
+    <div class="wrap">
+      <p class="eyebrow">Compare levels</p>
+      <h2>Side by side</h2>
+      <p class="section-intro">The limits for each level, matching Choose Your Level in the app. On a phone, swipe the table sideways.</p>
+
+      <div class="table-scroll" role="region" aria-label="Level comparison table" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col" class="free">Role Player</th>
+              <th scope="col" class="baller">Baller</th>
+              <th scope="col" class="fran">The Franchise</th>
+              <th scope="col" class="capper">Capper's Delight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cat"><th colspan="5" scope="colgroup">Chat &amp; buddy</th></tr>
+            <tr><th scope="row">Buddy brain</th><td>Know-It-All</td><td>Wizard</td><td>Deity</td><td>Deity</td></tr>
+            <tr><th scope="row">MacRAG knowledge</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><th scope="row">Buddy memory</th><td class="no">—</td><td>Standard</td><td>Advanced</td><td>Maximum</td></tr>
+            <tr><th scope="row">Chats per hour *</th><td>30</td><td>30</td><td>40</td><td>50</td></tr>
+            <tr><th scope="row">Chats per month *</th><td>1,000</td><td>1,000</td><td>2,000</td><td>6,000</td></tr>
+
+            <tr class="cat"><th colspan="5" scope="colgroup">Backtests</th></tr>
+            <tr><th scope="row">Team backtest seasons</th><td>2</td><td>5</td><td>10</td><td>20</td></tr>
+            <tr><th scope="row">Player backtest seasons</th><td class="no">—</td><td>5</td><td>5</td><td>5</td></tr>
+            <tr><th scope="row">Daily backtest coins</th><td>5</td><td>20</td><td>50</td><td>200</td></tr>
+            <tr><th scope="row">Saved backtest runs (on your device)</th><td>3</td><td>30</td><td>60</td><td>100</td></tr>
+
+            <tr class="cat"><th colspan="5" scope="colgroup">Lockers</th></tr>
+            <tr><th scope="row">Lockers</th><td>2</td><td>10</td><td>30</td><td>75</td></tr>
+            <tr><th scope="row">Recipe stat fields</th><td>150+</td><td>1,000+</td><td>2,000+</td><td>2,500+</td></tr>
+            <tr><th scope="row">Automatic picks from your rules</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Hand-added picks open per locker</th><td>2</td><td>4</td><td>8</td><td>16</td></tr>
+            <tr><th scope="row">Hand-added picks open, all lockers</th><td>2</td><td>5</td><td>10</td><td>25</td></tr>
+            <tr><th scope="row">Player &amp; team props lockers</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+
+            <tr class="cat"><th colspan="5" scope="colgroup">Stats &amp; tools</th></tr>
+            <tr><th scope="row">Stat history</th><td>600+ seasons<span class="cell-sub">ad-supported *</span></td><td>600+ seasons<span class="cell-sub">ad-free</span></td><td>600+ seasons<span class="cell-sub">ad-free</span></td><td>600+ seasons<span class="cell-sub">ad-free</span></td></tr>
+            <tr><th scope="row">Advanced stats &amp; trends</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><th scope="row">EV% on odds</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><th scope="row">+EV Finder board</th><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><th scope="row">Salary &amp; contracts</th><td class="no">—</td><td class="no">—</td><td>Contracts</td><td>+ Team payrolls</td></tr>
+            <tr><th scope="row">Personalized news</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><th scope="row">Slip scans per day (21+, beta) *</th><td>1</td><td>10</td><td>20</td><td>30</td></tr>
+
+            <tr class="cat"><th colspan="5" scope="colgroup">Coins &amp; experience</th></tr>
+            <tr><th scope="row">Subscription coins per month</th><td>2</td><td>4</td><td>10</td><td>20</td></tr>
+            <tr><th scope="row">Ads</th><td>Ad-supported</td><td>Ad-free</td><td>Ad-free</td><td>Ad-free</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="section-intro" style="margin-top:14px;font-size:.88rem">* <strong>Free:</strong> a quick ad every 10 buddy messages keeps the chat going (a longer ad also boosts your buddy's brain for the next 15), up to the hourly and monthly limits. Free members get the full 600+ seasons of stat history too; the latest three are always open, and a quick ad opens older seasons for 30 minutes. Watch an ad for 3 extra slip scans. <strong>Paid levels</strong> are ad-free; reach a chat limit and you still get up to 100 bonus messages a month.</p>
+    </div>
+  </section>
+
+  <!-- ============ PACKS ============ -->
+  <section id="packs">
+    <div class="wrap">
+      <p class="eyebrow">Add-on packs</p>
+      <h2>Go deeper on one thing</h2>
+      <p class="section-intro">Packs add a focused toolset on top of any paid level. You add them from the Store in the app.</p>
+
+      <div class="packs">
+        <article class="pack">
+          <div class="top" style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+            <h3>Reports</h3><span class="chip pack">Pack</span>
+          </div>
+          <p>Plain-language reports on games, players, teams, the league and your own picks. Higher levels open more reports: line movement at The Franchise; hot over/unders, situational and prop hit-rate reports at Capper's Delight.</p>
+          <p class="who">Baller and up</p>
+        </article>
+
+        <article class="pack">
+          <div class="top" style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+            <h3>Pick Champion</h3><span class="chip pack">Pack</span>
+          </div>
+          <p>Your buddy's analyst mode. Every pick gets a verdict, every player a hot-streak read, and every parlay a score, right in the chat.</p>
+          <p class="who">Baller and up · included with Capper's Delight</p>
+        </article>
+
+        <article class="pack">
+          <div class="top" style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+            <h3>DFS Pass</h3><span class="chip beta">Beta</span>
+          </div>
+          <p>A DraftKings and FanDuel value board that ranks every player by projected points per salary dollar, plus a lineup optimizer with locks, fades and stacks.</p>
+          <p class="who">Baller and up</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NOTES ============ -->
+  <section id="notes">
+    <div class="wrap">
+      <div class="notes">
+        <ul>
+          <li>Mac's Sports Playground is for ages 18 and up. Photo slip scanning and outbound links to books are for members 21 and up.</li>
+          <li>Mac's Sports Playground is a sports prediction and analysis platform, not a gambling app. Nothing is staked and nothing is paid out.</li>
+          <li>Available for NFL, NBA, MLB and NHL, plus college football and basketball. Some features are still rolling out by sport.</li>
+          <li>Saved backtest runs are stored on your phone, so they are removed if you delete the app.</li>
+          <li>Levels and packs are managed in the app through the App Store or Google Play. Features and limits can change as the app grows.</li>
+          <li>Questions? <a href="mailto:administration@mindofmart.com">administration@mindofmart.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Macletics · a division of <a href="https://mindofmart.com">Mind of Mart</a></span>
+    <span><a href="/privacy.html">Privacy Policy</a></span>
+    <span><a href="mailto:hello@mindofmart.com">hello@mindofmart.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
