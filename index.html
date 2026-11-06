@@ -118,6 +118,26 @@
   }
   @media (max-width: 520px) { .feature-row .shots .phone:nth-child(2) { display: none; } }
 
+  .spotlight { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .spotlight .copy { display: grid; gap: 16px; }
+  .spotlight .copy p { color: var(--ink-soft); max-width: 52ch; }
+  .spotlight .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  .spotlight .metrics div { border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 14px 16px; background: var(--bg); }
+  .spotlight .metrics b { display: block; font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); font-size: .95rem; margin-bottom: 4px; }
+  .spotlight .metrics span { font-size: .88rem; color: var(--ink-soft); line-height: 1.45; }
+  .spotlight .pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; color: var(--navy); font-weight: 500; }
+  .spotlight .visual { background: var(--navy); border-radius: 16px; padding: 36px 24px 0; display: grid; justify-items: center; position: relative; overflow: hidden; }
+  .spotlight .visual .caption { position: absolute; top: 14px; left: 18px; font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); }
+  .spotlight .visual .phone { max-width: 300px; margin: 14px 0 -40px; }
+  @media (max-width: 900px) { .spotlight { grid-template-columns: 1fr; gap: 32px; } .spotlight .visual .phone { max-width: 260px; } }
+  @media (max-width: 520px) { .spotlight .metrics { grid-template-columns: 1fr; } }
+
+  .shot-strip { display: flex; gap: 24px; justify-content: center; align-items: flex-start; flex-wrap: wrap; background: var(--bg); border: 1px solid var(--rule); border-radius: 16px; padding: 32px 24px 28px; margin-top: 40px; }
+  .shot-strip figure { margin: 0; display: grid; gap: 12px; justify-items: center; max-width: 230px; }
+  .shot-strip figure .phone { margin: 0; }
+  .shot-strip figcaption { font-size: .86rem; color: var(--ink-soft); text-align: center; line-height: 1.4; }
+  .shot-strip figcaption b { display: block; font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); font-size: .92rem; }
+
   .coverage { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: start; }
   .league-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
   .league-list div { padding: 16px 20px; border-bottom: 1px solid var(--rule); display: grid; gap: 2px; }
@@ -240,6 +260,32 @@
     </div>
   </section>
 
+  <!-- ============ BACKTESTING ============ -->
+  <section id="backtest">
+    <div class="wrap spotlight">
+      <div class="copy">
+        <p class="eyebrow">Backtesting</p>
+        <h2>See how your recipe would have done. Before you trust it.</h2>
+        <p>Every locker can be run against real past seasons before it ever makes a pick. You get the record, the win rate, ROI and units, an edge score, and the full game-by-game log, so you know exactly what you are looking at.</p>
+        <div class="metrics">
+          <div><b>Record &amp; win rate</b><span>Wins and losses across every past game the recipe matched.</span></div>
+          <div><b>ROI &amp; units</b><span>What the recipe returned over the whole run, not just its best week.</span></div>
+          <div><b>Edge score</b><span>One number that weighs line value, win rate and volume, with the breakdown shown.</span></div>
+          <div><b>Game log</b><span>Every matched game with the date, the pick, the result and the units it returned.</span></div>
+        </div>
+        <p class="pull">A recipe that would have lost is worth knowing about before it makes a pick, not after.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/playground/features/#levels">Backtest depth by level</a>
+          <a class="btn btn-secondary" href="#how">How it works</a>
+        </div>
+      </div>
+      <div class="visual">
+        <span class="caption">Backtest results</span>
+        <div class="phone"><img src="/img/app/backtest.jpg" alt="Backtest results for an NFL recipe: record, win rate, ROI, units, edge score breakdown and the game log" width="600" height="1044" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PRODUCT ============ -->
   <section id="product">
     <div class="wrap">
@@ -262,6 +308,7 @@
         </div>
         <div class="shots">
           <div class="phone"><img src="/img/app/build-rules.jpg" alt="The recipe builder with rules and a stat picker" width="600" height="1044" loading="lazy"></div>
+          <div class="phone"><img src="/img/app/backtest.jpg" alt="Backtest results with record, win rate, ROI and the game log" width="600" height="1044" loading="lazy"></div>
         </div>
       </div>
 
@@ -288,13 +335,13 @@
           <h3>Every game and every stat, all in one place.</h3>
           <p>Live scores and box scores, matchup previews, injuries and decades of player and team history, with advanced stats and trend charts that show who's actually heating up.</p>
           <ul>
-            <li>Live scores across every league</li>
+            <li>Live scores, quarter-by-quarter breakdowns and shot charts, in-game</li>
             <li>Top players, rankings and standings for every team</li>
             <li>Advanced stats and last-5 / last-10 trends</li>
           </ul>
         </div>
         <div class="shots">
-          <div class="phone"><img src="/img/app/scores.jpg" alt="The MLB scores board with in-progress and completed games" width="600" height="1044" loading="lazy"></div>
+          <div class="phone"><img src="/img/app/live-game.jpg" alt="A live NBA game with the running score, quarter breakdown and shot chart" width="600" height="1044" loading="lazy"></div>
           <div class="phone"><img src="/img/app/team-trends.jpg" alt="A team trends chart with top players" width="600" height="1044" loading="lazy"></div>
         </div>
       </div>
@@ -319,7 +366,7 @@
 
   <!-- ============ COVERAGE ============ -->
   <section id="coverage" class="soft rule-top">
-    <div class="wrap coverage">
+    <div class="wrap coverage" style="margin-bottom:0">
       <div>
         <p class="eyebrow">Coverage</p>
         <h2>The major US leagues, college, and soccer around the world</h2>
@@ -337,6 +384,18 @@
         <div><b>NHL</b><span>Pro hockey</span></div>
         <div><b>Soccer</b><span>Leagues and cups in 85 countries</span></div>
         <div><b>And more</b><span>200+ leagues served, 48 with live updates</span></div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="shot-strip" aria-label="Coverage screens">
+        <figure>
+          <div class="phone"><img src="/img/app/world.jpg" alt="The country picker, listing leagues available in the USA, Canada, Mexico, the UK, Spain, Germany, Italy, France and more" width="600" height="1044" loading="lazy"></div>
+          <figcaption><b>Pick a country</b>Leagues in 85 countries, filtered by sport</figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="/img/app/history.jpg" alt="The NFL teams screen with a season picker reaching back decades, plus top players and standings" width="600" height="1044" loading="lazy"></div>
+          <figcaption><b>Every season on record</b>Pick any year, back to 1869 where the history exists</figcaption>
+        </figure>
       </div>
     </div>
   </section>
