@@ -6,6 +6,7 @@
 <title>Features — Mac's Sports Playground</title>
 <meta name="description" content="Every feature in Mac's Sports Playground, level by level: stats, odds analysis, pick lockers, backtesting, your AI buddy, and add-on packs.">
 <link rel="canonical" href="https://macletics.com/playground/features/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,234 +19,121 @@
   app, checked against the server (coin_config.py / rate_limits.py).
   Last verified 2026-09-21.
 -->
+<link rel="stylesheet" href="/assets/site.css">
 <style>
-  :root {
-    --navy: #0E1626;
-    --navy-2: #16223A;
-    --navy-3: #1B2945;
-    --line: #24324D;
-    --white: #F4F7FB;
-    --muted: #9DA9BF;
-    --amber: #FFB302;
-    --amber-soft: rgba(255, 179, 2, 0.14);
-    --cobalt: #2E5BFF;
-    --cobalt-soft: rgba(46, 91, 255, 0.18);
-    --win: #35D08E;
-    --violet: #B28CFF;
-    --radius: 18px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-    z-index: 0;
-  }
-  header, main, footer { position: relative; z-index: 1; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  @media (max-width: 480px) { .wrap { padding: 0 16px; } }
-
-  /* ---------- Header ---------- */
-  header { padding: 26px 0; }
-  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .wordmark {
-    font-family: "Sora", sans-serif; font-weight: 800; font-size: 1.2rem;
-    letter-spacing: -0.01em; color: var(--white); text-decoration: none;
-  }
-  .wordmark .dot { color: var(--amber); }
-  .nav { display: flex; gap: 20px; flex-wrap: wrap; }
-  .nav a {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
-    color: var(--muted); text-decoration: none; transition: color .2s;
-  }
-  .nav a:hover, .nav a:focus-visible, .nav a[aria-current="page"] { color: var(--amber); }
-
-  /* ---------- Type ---------- */
-  .eyebrow {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
-    letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber);
-    margin-bottom: 18px;
-  }
-  h1 {
-    font-family: "Sora", sans-serif; font-weight: 800;
-    font-size: clamp(2.1rem, 5vw, 3.1rem); line-height: 1.1;
-    letter-spacing: -0.025em; margin-bottom: 20px;
-  }
-  h1 .accent { color: var(--amber); }
-  h2 {
-    font-family: "Sora", sans-serif; font-weight: 700;
-    font-size: clamp(1.45rem, 3vw, 1.9rem); letter-spacing: -0.02em;
-    line-height: 1.2; margin-bottom: 10px;
-  }
-  h3 { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
-  .lede { color: var(--muted); font-size: 1.08rem; max-width: 60ch; }
-  .section-intro { color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
-  section { padding-bottom: 80px; }
-
-  /* ---------- Hero ---------- */
-  .hero { padding-top: 40px; padding-bottom: 56px; }
-  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  /* Features page only. Shared chrome and tokens come from /assets/site.css. */
+  .hero { background: var(--bg-soft); border-bottom: 1px solid var(--rule); padding: 64px 0 48px; }
+  .hero h1 { margin-bottom: 18px; }
+  .hero h1 .accent { color: var(--amber-deep); }
+  .section-intro { color: var(--ink-soft); max-width: 62ch; margin: 10px 0 32px; font-size: 1.02rem; }
+  section { padding: 64px 0 24px; }
+  section#packs, section:last-of-type { padding-bottom: 80px; }
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
   .jump a {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.8rem;
-    color: var(--white); text-decoration: none;
-    border: 1px solid var(--line); background: var(--navy-2);
-    border-radius: 999px; padding: 7px 14px; transition: border-color .2s, color .2s;
+    font-size: .88rem; font-weight: 500; color: var(--navy); text-decoration: none;
+    border: 1px solid var(--rule-strong); background: var(--bg); border-radius: 999px; padding: 7px 14px;
+    transition: border-color .15s, color .15s;
   }
-  .jump a:hover, .jump a:focus-visible { border-color: var(--amber); color: var(--amber); }
+  .jump a:hover, .jump a:focus-visible { border-color: var(--navy); }
 
-  /* ---------- Level chips ---------- */
+  /* Level chips */
   .chip {
     display: inline-block; font-family: "IBM Plex Mono", monospace;
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; border-radius: 6px; padding: 3px 8px;
-    white-space: nowrap; vertical-align: middle;
+    font-size: .66rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    border-radius: 5px; padding: 3px 8px; white-space: nowrap; vertical-align: middle; border: 1px solid transparent;
   }
-  .chip.free   { background: rgba(53, 208, 142, .14); color: var(--win); }
-  .chip.baller { background: var(--cobalt-soft); color: #8FA8FF; }
-  .chip.fran   { background: var(--amber-soft); color: var(--amber); }
-  .chip.capper { background: rgba(178, 140, 255, .16); color: var(--violet); }
-  .chip.pack   { background: rgba(255,255,255,.08); color: var(--white); }
-  .chip.beta   { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+  .chip.free   { background: #E6F6EE; color: #0F6E47; }
+  .chip.baller { background: #E8EEFF; color: #1F3FB8; }
+  .chip.fran   { background: var(--amber-wash); color: var(--amber-deep); }
+  .chip.capper { background: #F0E9FF; color: #5B3BB5; }
+  .chip.pack   { background: var(--bg-soft); color: var(--navy); border-color: var(--rule-strong); }
+  .chip.beta   { background: transparent; color: var(--ink-soft); border-color: var(--rule-strong); }
 
-  /* ---------- Levels ---------- */
+  /* Levels */
   .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
   .level {
-    background: var(--navy-2); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 24px 22px;
-    display: flex; flex-direction: column; gap: 14px;
-    border-top-width: 4px;
+    background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius);
+    padding: 24px 22px; display: flex; flex-direction: column; gap: 14px; border-top-width: 3px;
   }
-  .level.free   { border-top-color: var(--win); }
-  .level.baller { border-top-color: var(--cobalt); }
+  .level.free   { border-top-color: #1E9E68; }
+  .level.baller { border-top-color: #2E5BFF; }
   .level.fran   { border-top-color: var(--amber); }
-  .level.capper { border-top-color: var(--violet); }
-  .level h3 { font-size: 1.2rem; }
-  .level .tag { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--muted); }
+  .level.capper { border-top-color: #7A5AF8; }
+  .level h3 { font-size: 1.15rem; }
+  .level .tag { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--ink-soft); }
   .level ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-  .level li { font-size: 0.93rem; color: var(--muted); padding-left: 18px; position: relative; }
-  .level li::before {
-    content: ""; position: absolute; left: 0; top: .62em;
-    width: 8px; height: 8px; border-radius: 2px; background: var(--amber);
-  }
-  .level li strong { color: var(--white); font-weight: 500; }
+  .level li { font-size: .92rem; color: var(--ink-soft); padding-left: 18px; position: relative; }
+  .level li::before { content: ""; position: absolute; left: 0; top: .7em; width: 8px; height: 2px; background: var(--amber); }
+  .level li strong { color: var(--navy); font-weight: 600; }
 
-  /* ---------- Feature groups ---------- */
-  .group { margin-bottom: 44px; }
-  .group-head {
-    display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px;
-    border-bottom: 1px solid var(--line); padding-bottom: 12px;
-  }
-  .group-head .num { font-family: "IBM Plex Mono", monospace; color: var(--amber); font-size: 0.85rem; }
+  /* Feature groups */
+  .group { margin-bottom: 40px; }
+  .group-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
+  .group-head .num { font-family: "IBM Plex Mono", monospace; color: var(--amber-deep); font-size: .82rem; }
   .group-head h3 { font-size: 1.2rem; }
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .feature {
-    background: var(--navy-2); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 22px;
-    display: flex; flex-direction: column; gap: 8px;
+    background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius);
+    padding: 20px; display: flex; flex-direction: column; gap: 8px;
   }
   .feature .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-  .feature p { color: var(--muted); font-size: 0.93rem; }
+  .feature h3 { font-size: 1rem; }
+  .feature p { color: var(--ink-soft); font-size: .92rem; }
 
-  /* ---------- Compare table ---------- */
-  .table-scroll {
-    overflow-x: auto; border: 1px solid var(--line);
-    border-radius: var(--radius); background: var(--navy-2);
-    -webkit-overflow-scrolling: touch;
-  }
-  table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 0.92rem; }
-  caption { text-align: left; padding: 16px 18px 0; color: var(--muted); font-size: 0.85rem; }
-  th, td { padding: 11px 16px; text-align: center; border-bottom: 1px solid var(--line); }
+  /* Compare table */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg); -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: .92rem; }
+  caption { text-align: left; padding: 16px 18px 0; color: var(--ink-soft); font-size: .85rem; }
+  th, td { padding: 11px 16px; text-align: center; border-bottom: 1px solid var(--rule); }
   th:first-child, td:first-child { text-align: left; }
-  thead th {
-    font-family: "Sora", sans-serif; font-weight: 700; font-size: 0.9rem;
-    position: sticky; top: 0; background: var(--navy-3);
-  }
-  thead th.free   { color: var(--win); }
-  thead th.baller { color: #8FA8FF; }
-  thead th.fran   { color: var(--amber); }
-  thead th.capper { color: var(--violet); }
-  tbody th {
-    font-weight: 400; color: var(--muted); text-align: left;
-  }
+  thead th { font-family: "Sora", sans-serif; font-weight: 600; font-size: .9rem; position: sticky; top: 68px; background: var(--bg-soft); color: var(--navy); }
+  thead th.free   { color: #0F6E47; }
+  thead th.baller { color: #1F3FB8; }
+  thead th.fran   { color: var(--amber-deep); }
+  thead th.capper { color: #5B3BB5; }
+  tbody th { font-weight: 400; color: var(--ink-soft); text-align: left; }
   tbody tr.cat th {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.72rem;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--amber);
-    background: rgba(255,255,255,.02); padding-top: 16px;
+    font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--amber-deep); background: var(--bg-soft); padding-top: 16px;
   }
-  td { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-  td .cell-sub { display: block; font-size: 0.74rem; color: var(--muted); white-space: nowrap; }
-  td.yes { color: var(--win); }
-  td.no  { color: #56627A; }
+  td { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; color: var(--ink); }
+  td .cell-sub { display: block; font-size: .72rem; color: var(--ink-soft); white-space: nowrap; }
+  td.yes { color: #0F6E47; }
+  td.no  { color: var(--ink-faint); }
   tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
 
-  /* ---------- Packs ---------- */
+  /* Packs */
   .packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .pack {
-    background: linear-gradient(180deg, var(--navy-3), var(--navy-2));
-    border: 1px solid var(--line); border-radius: var(--radius); padding: 24px;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-  .pack p { color: var(--muted); font-size: 0.93rem; }
-  .pack .who { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--white); margin-top: auto; padding-top: 8px; }
+  .pack { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .pack p { color: var(--ink-soft); font-size: .93rem; }
+  .pack .who { font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--navy); margin-top: auto; padding-top: 8px; }
 
-  /* ---------- Notes ---------- */
-  .notes {
-    background: var(--navy-2); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 24px 26px;
-  }
+  /* Notes */
+  .notes { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: var(--radius); padding: 22px 26px; }
   .notes ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .notes li { color: var(--muted); font-size: 0.92rem; padding-left: 18px; position: relative; }
-  .notes li::before { content: "·"; position: absolute; left: 4px; color: var(--amber); font-weight: 700; }
-  .notes a { color: var(--amber); }
+  .notes li { color: var(--ink-soft); font-size: .92rem; padding-left: 18px; position: relative; }
+  .notes li::before { content: "·"; position: absolute; left: 4px; color: var(--amber-deep); font-weight: 700; }
 
-  /* ---------- Footer ---------- */
-  footer { border-top: 1px solid var(--line); padding: 40px 0; }
-  footer .wrap {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 0.9rem;
-  }
-  footer a { color: var(--amber); text-decoration: none; }
-  footer a:hover, footer a:focus-visible { text-decoration: underline; }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 960px) {
-    .levels { grid-template-columns: repeat(2, 1fr); }
-    .features, .packs { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 620px) {
-    .levels, .features, .packs { grid-template-columns: 1fr; }
-    .hero { padding-top: 16px; }
-  }
-
-  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  @media (max-width: 960px) { .levels { grid-template-columns: repeat(2, 1fr); } .features, .packs { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .levels, .features, .packs { grid-template-columns: 1fr; } .hero { padding-top: 40px; } }
 </style>
 </head>
 <body>
 
-<header>
+<header class="site-header">
   <div class="wrap">
-    <a class="wordmark" href="/">Macletics<span class="dot">.</span></a>
-    <nav class="nav" aria-label="Site">
+    <a class="brand" href="/" aria-label="Macletics home">
+      <span class="wordmark">Macletics<span class="dot">.</span></span>
+      <span class="by">a Mind of Mart LLC division</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Site">
       <a href="/">Home</a>
       <a href="/playground/features/" aria-current="page">Features</a>
       <a href="/support.html">Support</a>
-      <a href="/privacy.html">Privacy</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" rel="noopener">Get it on Google Play</a>
     </nav>
   </div>
 </header>
@@ -603,13 +491,64 @@
   </section>
 </main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
-    <span>© 2026 Macletics · a division of <a href="https://mindofmart.com">Mind of Mart LLC</a></span>
-    <span><a href="/privacy.html">Privacy Policy</a></span>
-    <span><a href="mailto:hello@mindofmart.com">hello@mindofmart.com</a></span>
+    <div class="cols">
+      <div class="about">
+        <a class="brand" href="/"><span class="wordmark">Macletics<span class="dot">.</span></span></a>
+        <p>Macletics is the sports division of Mind of Mart LLC, an independent software studio. Maker of Mac's Sports Playground.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/playground/features/">Features &amp; levels</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" rel="noopener">Google Play</a></li>
+          <li><a href="/support.html">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://mindofmart.com/">Mind of Mart LLC</a></li>
+          <li><a href="https://mindofmart.com/press/">Press &amp; partners</a></li>
+          <li><a href="mailto:support@macletics.com">support@macletics.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/delete-account.html">Delete your account</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="https://x.com/MacSportsPlay" rel="noopener">X</a></li>
+          <li><a href="https://instagram.com/macssportsplayground" rel="noopener">Instagram</a></li>
+          <li><a href="https://tiktok.com/@macssportsplayground" rel="noopener">TikTok</a></li>
+          <li><a href="https://www.youtube.com/@MacsSportsPlayground" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="base">
+      <span>© 2026 Macletics, a division of Mind of Mart LLC. All rights reserved.</span>
+      <span>Mac's Sports Playground is a sports prediction and analysis platform. Ages 18+.</span>
+    </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var t = document.querySelector('.nav-toggle'), n = document.getElementById('site-nav');
+    if (!t || !n) return;
+    t.addEventListener('click', function () {
+      var open = n.classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>
 
 </body>
 </html>
