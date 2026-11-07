@@ -30,9 +30,15 @@
   news ticker cropped off).
   VIDEOS: the "Watch it in action" section was removed on 2026-11-06 until a
   video exists. The lazy YouTube embed is in git history (commit a87380f).
-  STORES: Google Play is live (US). When the App Store listing ships, turn
-  the App Store <span class="store-btn soon"> into an <a class="store-btn">
-  in the hero and the closing band, and update the "Availability" row.
+  STORES: Google Play is live (US). Until the App Store listing ships, the App
+  Store buttons in the hero and the closing band are <button data-signup
+  data-interest="ios_launch">: they open the email signup (assets/signup.js,
+  POST api2.macletics.com/public/waitlist). When it ships, turn each into an
+  <a class="store-btn" href="LISTING_URL"> (drop "soon" and the data-signup
+  attributes, change "Coming soon · Get notified" to "Download on the"), remove
+  the "Get an email when it lands" button in the closing band, update the
+  "Availability" row, then email everyone on the ios_launch list
+  (GET /admin/waitlist?interest=ios_launch&format=csv).
 -->
 <script type="application/ld+json">
 {
@@ -206,10 +212,10 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
             <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
           </a>
-          <span class="store-btn soon" aria-label="Coming soon to the App Store">
+          <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-appstore-hero" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            <span class="txt"><span class="small">Coming soon to the</span><span class="big">App Store</span></span>
-          </span>
+            <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
+          </button>
         </div>
         <p class="meta">Free to start · Ages 18+ · Available on Google Play in the United States</p>
       </div>
@@ -459,7 +465,7 @@
       <div>
         <p class="eyebrow">Get the app</p>
         <h2>Build your first locker today.</h2>
-        <p>Free to start on Google Play. The App Store listing is coming soon.</p>
+        <p>Free to start on Google Play. The App Store listing is coming soon. <button type="button" class="link-btn" data-signup data-interest="ios_launch" data-source="macletics-cta-text">Get an email when it lands.</button></p>
         <p class="fine">Mac's Sports Playground is a sports prediction and analysis platform. Ages 18+.</p>
       </div>
       <div class="store-row">
@@ -467,10 +473,10 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
           <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
         </a>
-        <span class="store-btn soon" aria-label="Coming soon to the App Store">
+        <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-appstore-cta" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <span class="txt"><span class="small">Coming soon to the</span><span class="big">App Store</span></span>
-        </span>
+          <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
+        </button>
       </div>
     </div>
   </section>
@@ -479,6 +485,20 @@
 
 <footer class="site-footer">
   <div class="wrap">
+    <div class="footer-signup">
+      <div>
+        <strong>Get product updates</strong>
+        <p>Launch news, new features and the day we land on the App Store, by email. Only product news. See our <a href="/privacy">Privacy Policy</a>.</p>
+      </div>
+      <form class="signup-inline" data-signup-form data-interest="updates" data-source="macletics-footer" novalidate>
+        <div class="signup-row">
+          <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Email address" required>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+        <input type="text" name="company" tabindex="-1" autocomplete="off" class="signup-trap" aria-hidden="true">
+        <p class="signup-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
     <div class="cols">
       <div class="about">
         <a class="brand" href="/"><span class="wordmark">Macletics<span class="dot">.</span></span></a>
@@ -537,5 +557,6 @@
   })();
 </script>
 
+<script src="/assets/signup.js" defer></script>
 </body>
 </html>

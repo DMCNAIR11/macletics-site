@@ -111,6 +111,20 @@
 
 <footer class="site-footer">
   <div class="wrap">
+    <div class="footer-signup">
+      <div>
+        <strong>Get product updates</strong>
+        <p>Launch news, new features and the day we land on the App Store, by email. Only product news. See our <a href="/privacy">Privacy Policy</a>.</p>
+      </div>
+      <form class="signup-inline" data-signup-form data-interest="updates" data-source="macletics-footer" novalidate>
+        <div class="signup-row">
+          <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Email address" required>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+        <input type="text" name="company" tabindex="-1" autocomplete="off" class="signup-trap" aria-hidden="true">
+        <p class="signup-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
     <div class="cols">
       <div class="about">
         <a class="brand" href="/"><span class="wordmark">Macletics<span class="dot">.</span></span></a>
@@ -167,5 +181,6 @@
     });
   })();
 </script>
+<script src="/assets/signup.js" defer></script>
 </body>
 </html>
