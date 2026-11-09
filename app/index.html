@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get the app — Mac's Sports Playground</title>
+<meta name="description" content="Get Mac's Sports Playground on Google Play. Build pick systems, backtest them against past seasons, and ask an AI Buddy that answers from real data. iPhone version coming soon.">
+<link rel="canonical" href="https://macletics.com/app/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://macletics.com/app/">
+<meta property="og:site_name" content="Macletics">
+<meta property="og:title" content="Get Mac's Sports Playground">
+<meta property="og:description" content="Build pick systems, backtest them against past seasons, and ask an AI Buddy that answers from real data.">
+<meta property="og:image" content="https://macletics.com/img/app/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@MacSportsPlay">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<!--
+  The app's download page. Same copy rules as the home page (see its head
+  comment): picks, analysis, prediction; no prices; Mac's Sports Playground by
+  Macletics, a division of Mind of Mart LLC.
+  Screens: /img/app/screens/ (640 x 1320, cut from the raw store captures in
+  the app repo, store-assets/raw/). QR: /img/app/play-qr.svg, made with segno
+  from the Google Play URL; regenerate if that URL ever changes.
+  App Store: the button is a notify-me signup until the listing ships. Swap it
+  for <a class="store-btn" href="LISTING_URL"> here, in both badge rows, and on
+  the home page; add an App Store QR next to the Play one.
+-->
+<style>
+  .good { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .good h3 { font-size: 1.02rem; margin-bottom: 6px; }
+  .good p { color: var(--ink-soft); font-size: .95rem; }
+  .good .link-btn { color: var(--link); }
+  @media (max-width: 900px) { .good { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .good { grid-template-columns: 1fr; } }
+  .get { text-align: center; padding: 96px 0 104px; }
+  .get .wrap { display: grid; justify-items: center; gap: 0; }
+  .get h2 { color: #fff; font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-bottom: 14px; }
+  .get p.sub { color: #C3CCDC; margin-bottom: 30px; }
+  .get .badges, .get .qr { justify-content: center; }
+  .get .qr { text-align: left; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Macletics home">
+      <span class="wordmark">Macletics<span class="dot">.</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Site">
+      <a href="/app/" aria-current="page">The app</a>
+      <a href="/playground/features/">Features &amp; levels</a>
+      <a href="/support.html">Support</a>
+      <a class="btn btn-amber" href="#get">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="showcase on-dark">
+    <div class="wrap">
+      <div>
+        <div class="app-id">
+          <img src="/img/app/icon-192.png" alt="" width="56" height="56">
+          <div><b>Mac's Sports Playground</b><span>By Macletics · Sports prediction &amp; analysis</span></div>
+        </div>
+        <h1>Your pick system. In your pocket.</h1>
+        <p class="lede">Build pick systems, backtest them against past seasons, and ask an AI Buddy that answers from real data. Free to start.</p>
+        <div class="badges">
+          <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" aria-label="Get it on Google Play" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+            <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
+          </a>
+          <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-app-hero" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
+          </button>
+        </div>
+        <div class="qr">
+          <img src="/img/app/play-qr.svg" alt="QR code that opens Mac's Sports Playground on Google Play" width="96" height="96">
+          <p><b>Scan to get the app</b>Opens the Google Play listing on your phone.</p>
+        </div>
+        <p class="meta">Android, on Google Play in the United States · Ages 18+</p>
+      </div>
+      <div class="fan" aria-hidden="true">
+        <div class="device d-left"><img src="/img/app/screens/locker.jpg" alt="" width="640" height="1320"></div>
+        <div class="device d-center"><img src="/img/app/screens/backtest.jpg" alt="" width="640" height="1320"></div>
+        <div class="device d-right"><img src="/img/app/screens/live.jpg" alt="" width="640" height="1320"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Inside the app</p>
+        <h2>Take a look around</h2>
+        <p class="muted">Real screens from the app. Swipe or scroll for more.</p>
+      </div>
+    </div>
+    <div class="gallery" role="region" aria-label="App screens" tabindex="0">
+      <figure>
+        <div class="device"><img src="/img/app/screens/dashboard.jpg" alt="The dashboard: quick actions, your teams and your games" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Your dashboard</b>Your teams, your games and every tool, one tap away.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/locker.jpg" alt="The recipe builder with four rules and a stat picker" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Build a recipe</b>Stack rules on thousands of season-tagged stats.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/backtest.jpg" alt="Backtest results for an NFL recipe with the game log open" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Backtest it</b>Record, win rate, ROI and the full game log.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/live.jpg" alt="A live NBA game with the score, quarters and a shot chart" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Follow it live</b>Running score, quarter breakdowns and shot charts.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/buddy.jpg" alt="The AI Buddy listing the top five rushers" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Ask your Buddy</b>Answers from real data, in the personality you pick.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/trends.jpg" alt="A team trends chart for passing percentage" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Spot the trend</b>Latest, average, high and low, charted game by game.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/reports.jpg" alt="The reports list for NBA" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Read the report</b>Plain-language reports, built fresh every night.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/seasons.jpg" alt="The NFL teams screen with a season picker reaching back decades" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Go back in time</b>Every season on record, back to 1869 where the history exists.</figcaption>
+      </figure>
+      <figure>
+        <div class="device"><img src="/img/app/screens/world.jpg" alt="The country picker listing leagues by country" width="640" height="1320" loading="lazy"></div>
+        <figcaption><b>Go global</b>Leagues in 85 countries, filtered by sport.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="soft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Good to know</p>
+        <h2>Before you download</h2>
+      </div>
+      <div class="good">
+        <div><h3>Free to start</h3><p>The free level includes the AI Buddy, stats for every team and player, and two lockers. <a href="/playground/features/">Compare levels</a></p></div>
+        <div><h3>Android now, iPhone soon</h3><p>On Google Play in the United States. The App Store version is on the way. <button type="button" class="link-btn" data-signup data-interest="ios_launch" data-source="macletics-app-good">Get an email when it lands.</button></p></div>
+        <div><h3>Ages 18+</h3><p>A sports prediction and analysis platform for adults. Photo slip scanning is 21+. <a href="/terms">Terms of Use</a></p></div>
+        <div><h3>Your data, your choice</h3><p>Delete your account from inside the app whenever you choose. <a href="/privacy">Privacy Policy</a></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase on-dark get" id="get">
+    <div class="wrap">
+      <h2>Build your first locker today.</h2>
+      <p class="sub">Free to start on Google Play.</p>
+      <div class="badges">
+          <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" aria-label="Get it on Google Play" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+            <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
+          </a>
+          <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-app-get" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
+          </button>
+        </div>
+      <div class="qr">
+          <img src="/img/app/play-qr.svg" alt="QR code that opens Mac's Sports Playground on Google Play" width="96" height="96">
+          <p><b>Scan to get the app</b>Opens the Google Play listing on your phone.</p>
+        </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-signup">
+      <div>
+        <strong>Get product updates</strong>
+        <p>Launch news, new features and the day we land on the App Store, by email. Only product news. See our <a href="/privacy">Privacy Policy</a>.</p>
+      </div>
+      <form class="signup-inline" data-signup-form data-interest="updates" data-source="macletics-footer" novalidate>
+        <div class="signup-row">
+          <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-label="Email address" required>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+        <input type="text" name="company" tabindex="-1" autocomplete="off" class="signup-trap" aria-hidden="true">
+        <p class="signup-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cols">
+      <div class="about">
+        <a class="brand" href="/"><span class="wordmark">Macletics<span class="dot">.</span></span></a>
+        <p>Macletics is the sports division of Mind of Mart LLC, an independent software studio. Maker of Mac's Sports Playground.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/playground/features/">Features &amp; levels</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" rel="noopener">Google Play</a></li>
+          <li><a href="/support.html">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://mindofmart.com/">Mind of Mart LLC</a></li>
+          <li><a href="https://mindofmart.com/press/">Press &amp; partners</a></li>
+          <li><a href="mailto:support@macletics.com">support@macletics.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/delete-account.html">Delete your account</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="https://x.com/MacSportsPlay" rel="noopener">X</a></li>
+          <li><a href="https://instagram.com/macssportsplayground" rel="noopener">Instagram</a></li>
+          <li><a href="https://tiktok.com/@macssportsplayground" rel="noopener">TikTok</a></li>
+          <li><a href="https://www.youtube.com/@MacsSportsPlayground" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="base">
+      <span>© 2026 Macletics, a division of Mind of Mart LLC. All rights reserved.</span>
+      <span>Mac's Sports Playground is a sports prediction and analysis platform. Ages 18+.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var t = document.querySelector('.nav-toggle'), n = document.getElementById('site-nav');
+    if (!t || !n) return;
+    t.addEventListener('click', function () {
+      var open = n.classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    n.addEventListener('click', function (e) { if (e.target.tagName === 'A') { n.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); } });
+  })();
+</script>
+
+<script src="/assets/signup.js" defer></script>
+</body>
+</html>
