@@ -12,12 +12,12 @@
 <meta property="og:site_name" content="Macletics">
 <meta property="og:title" content="Mac's Sports Playground">
 <meta property="og:description" content="Build your own pick systems, test them against past seasons, and talk the slate through with an AI Buddy.">
-<meta property="og:image" content="https://macletics.com/img/app/dashboard.jpg">
+<meta property="og:image" content="https://macletics.com/img/app/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@MacSportsPlay">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <!--
   Copy rules: say "picks", "analysis", "prediction"; never "betting", "wager",
@@ -26,12 +26,14 @@
   "Mac's Sports Playground" by Macletics, a division of Mind of Mart LLC.
   Numbers: see _GUIDES/__TRANSFER/SITE_FACTS_HANDOFF_2026-11-06.md for where
   each one comes from (league-capabilities manifest, app field catalogs).
-  Screenshots: /img/app/ (real-device captures 2026-09-19, status bar and
-  news ticker cropped off).
+  Screenshots: /img/app/screens/ (full-height screens, 640 x 1320, cut from
+  the raw store captures in the app repo, store-assets/raw/). The older
+  600 x 1044 crops in /img/app/ are still used by the features page.
+  The app's own download page is /app/.
   VIDEOS: the "Watch it in action" section was removed on 2026-11-06 until a
   video exists. The lazy YouTube embed is in git history (commit a87380f).
   STORES: Google Play is live (US). Until the App Store listing ships, the App
-  Store buttons in the hero and the closing band are <button data-signup
+  Store buttons in the hero and the closing band (and on /app/) are <button data-signup
   data-interest="ios_launch">: they open the email signup (assets/signup.js,
   POST api2.macletics.com/public/waitlist). When it ships, turn each into an
   <a class="store-btn" href="LISTING_URL"> (drop "soon" and the data-signup
@@ -75,101 +77,57 @@
 </script>
 <style>
   /* Home-page only */
-  .hero { background: var(--bg-soft); border-bottom: 1px solid var(--rule); padding: 72px 0 64px; }
-  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
-  .hero h1 { margin-bottom: 20px; }
-  .hero .lede { margin-bottom: 30px; }
-  .hero .meta { margin-top: 18px; font-size: .86rem; color: var(--ink-soft); }
-  .hero-visual {
-    position: relative; background: var(--navy); border-radius: 16px; padding: 36px 32px 0;
-    overflow: hidden; display: flex; justify-content: center; align-items: flex-end; min-height: 520px;
-  }
-  .hero-visual::before {
-    content: ""; position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-  .hero-visual .phone { position: relative; max-width: 300px; margin-bottom: -60px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.1) inset; }
-  .hero-visual .caption {
-    position: absolute; left: 20px; top: 20px; z-index: 2;
-    font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber);
-  }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .step { display: grid; gap: 8px; align-content: start; }
+  .step .num { font-family: "Sora", sans-serif; font-weight: 700; font-size: 2.4rem; line-height: 1; color: var(--amber); }
+  .step p { color: var(--ink-soft); }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; gap: 32px; } }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .split.flip .copy { order: 2; }
+  .split .copy { display: grid; gap: 16px; }
+  .split .copy p { color: var(--ink-soft); max-width: 50ch; }
+  .split + .split { margin-top: 112px; }
+  .ticks { list-style: none; display: grid; gap: 10px; }
+  .ticks li { padding-left: 26px; position: relative; }
+  .ticks li::before { content: ""; position: absolute; left: 0; top: .55em; width: 14px; height: 8px; border-left: 2px solid var(--amber); border-bottom: 2px solid var(--amber); transform: rotate(-45deg); }
+  .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; margin-top: 4px; }
+  .metrics b { display: block; font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .metrics span { font-size: .93rem; color: var(--ink-soft); line-height: 1.45; }
   @media (max-width: 900px) {
-    .hero { padding: 48px 0 56px; }
-    .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
-    .hero-visual { min-height: 0; padding: 28px 24px 0; }
-    .hero-visual .phone { max-width: 250px; margin-bottom: -48px; }
+    .split, .split.flip { grid-template-columns: 1fr; gap: 40px; }
+    .split.flip .copy { order: 0; }
+    .split + .split { margin-top: 80px; }
   }
+  @media (max-width: 520px) { .metrics { grid-template-columns: 1fr; } }
 
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
-  .step { border-top: 2px solid var(--navy); padding-top: 20px; display: grid; gap: 10px; align-content: start; }
-  .step .num { font-family: "IBM Plex Mono", monospace; font-size: .74rem; letter-spacing: .12em; color: var(--amber-deep); }
-  .step p { color: var(--ink-soft); font-size: .95rem; }
-  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 520px; margin: 0 auto; }
+  .leagues { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+  .leagues span { font-size: .9rem; font-weight: 500; color: var(--navy); background: var(--bg); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; }
 
-  .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 56px 0; border-top: 1px solid var(--rule); }
-  .feature-row:first-of-type { border-top: 0; padding-top: 0; }
-  .feature-row.flip .copy { order: 2; }
-  .feature-row .copy { display: grid; gap: 14px; }
-  .feature-row .copy p { color: var(--ink-soft); max-width: 50ch; }
-  .feature-row ul { list-style: none; display: grid; gap: 9px; margin-top: 4px; }
-  .feature-row li { padding-left: 24px; position: relative; font-size: .97rem; }
-  .feature-row li::before { content: ""; position: absolute; left: 0; top: .66em; width: 12px; height: 2px; background: var(--amber); }
-  .feature-row .shots { display: flex; gap: 18px; justify-content: center; align-items: flex-start; background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 16px; padding: 32px 24px; }
-  .feature-row .shots .phone { margin: 0; max-width: 220px; }
-  .feature-row .shots .phone:nth-child(2) { margin-top: 36px; }
-  @media (max-width: 900px) {
-    .feature-row, .feature-row.flip { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
-    .feature-row.flip .copy { order: 0; }
-  }
-  @media (max-width: 520px) { .feature-row .shots .phone:nth-child(2) { display: none; } }
+  .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .levels article { border-top: 3px solid var(--navy); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+  .levels article.free { border-top-color: var(--win); }
+  .levels article.capper { border-top-color: var(--amber); }
+  .levels h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .levels .tag { font-family: "IBM Plex Sans", sans-serif; font-size: .78rem; font-weight: 600; color: var(--win); }
+  .levels p { color: var(--ink-soft); font-size: .95rem; }
+  @media (max-width: 960px) { .levels { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .levels { grid-template-columns: 1fr; } }
 
-  .spotlight { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
-  .spotlight .copy { display: grid; gap: 16px; }
-  .spotlight .copy p { color: var(--ink-soft); max-width: 52ch; }
-  .spotlight .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
-  .spotlight .metrics div { border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 14px 16px; background: var(--bg); }
-  .spotlight .metrics b { display: block; font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); font-size: .95rem; margin-bottom: 4px; }
-  .spotlight .metrics span { font-size: .88rem; color: var(--ink-soft); line-height: 1.45; }
-  .spotlight .pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; color: var(--navy); font-weight: 500; }
-  .spotlight .visual { background: var(--navy); border-radius: 16px; padding: 36px 24px 0; display: grid; justify-items: center; position: relative; overflow: hidden; }
-  .spotlight .visual .caption { position: absolute; top: 14px; left: 18px; font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); }
-  .spotlight .visual .phone { max-width: 300px; margin: 14px 0 -40px; }
-  @media (max-width: 900px) { .spotlight { grid-template-columns: 1fr; gap: 32px; } .spotlight .visual .phone { max-width: 260px; } }
-  @media (max-width: 520px) { .spotlight .metrics { grid-template-columns: 1fr; } }
-
-  .shot-strip { display: flex; gap: 24px; justify-content: center; align-items: flex-start; flex-wrap: wrap; background: var(--bg); border: 1px solid var(--rule); border-radius: 16px; padding: 32px 24px 28px; margin-top: 40px; }
-  .shot-strip figure { margin: 0; display: grid; gap: 12px; justify-items: center; max-width: 230px; }
-  .shot-strip figure .phone { margin: 0; }
-  .shot-strip figcaption { font-size: .86rem; color: var(--ink-soft); text-align: center; line-height: 1.4; }
-  .shot-strip figcaption b { display: block; font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); font-size: .92rem; }
-
-  .coverage { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: start; }
-  .league-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
-  .league-list div { padding: 16px 20px; border-bottom: 1px solid var(--rule); display: grid; gap: 2px; }
-  .league-list div:nth-child(odd) { border-right: 1px solid var(--rule); }
-  .league-list div:nth-last-child(-n+2) { border-bottom: 0; }
-  .league-list b { font-family: "Sora", sans-serif; font-weight: 600; color: var(--navy); }
-  .league-list span { font-size: .86rem; color: var(--ink-soft); }
-  @media (max-width: 860px) { .coverage { grid-template-columns: 1fr; } }
-  @media (max-width: 480px) { .league-list { grid-template-columns: 1fr; } .league-list div:nth-child(odd) { border-right: 0; } .league-list div:nth-last-child(2) { border-bottom: 1px solid var(--rule); } }
-
-  .levels .card h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-  .levels .card .tag { font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; white-space: nowrap; }
-  .levels .card { border-top: 3px solid var(--navy); }
-  .levels .card.free { border-top-color: var(--win); }
-  .levels .card.capper { border-top-color: var(--amber); }
-
-  .trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .trust .card h3 { font-size: 1rem; }
-  .trust .card a { font-size: .93rem; }
-  @media (max-width: 960px) { .trust { grid-template-columns: repeat(2, 1fr); } }
+  .trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .trust h3 { font-size: 1rem; margin-bottom: 6px; }
+  .trust p { color: var(--ink-soft); font-size: .93rem; }
+  @media (max-width: 960px) { .trust { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .trust { grid-template-columns: 1fr; } }
 
-  .cta-band .wrap { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
-  .cta-band h2 { margin-bottom: 12px; }
-  .cta-band .fine { margin-top: 18px; font-size: .84rem; color: var(--navy-muted); }
-  @media (max-width: 860px) { .cta-band .wrap { grid-template-columns: 1fr; } }
+  .get { text-align: center; padding: 96px 0 104px; }
+  .get .wrap { display: grid; justify-items: center; }
+  .get h2 { color: #fff; font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-bottom: 14px; }
+  .get p.sub { color: #C3CCDC; margin-bottom: 30px; }
+  .get .badges, .get .qr { justify-content: center; }
+  .get .qr { text-align: left; }
+  .get .fine { margin-top: 28px; font-size: .84rem; color: var(--navy-muted); }
 </style>
 </head>
 <body>
@@ -178,17 +136,13 @@
   <div class="wrap">
     <a class="brand" href="/" aria-label="Macletics home">
       <span class="wordmark">Macletics<span class="dot">.</span></span>
-      <span class="by">a Mind of Mart LLC division</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="site-nav" id="site-nav" aria-label="Site">
-      <a href="#product">Product</a>
-      <a href="#how">How it works</a>
-      <a href="#coverage">Coverage</a>
-      <a href="#levels">Levels</a>
-      <a href="/playground/features/">All features</a>
+      <a href="/app/">The app</a>
+      <a href="/playground/features/">Features &amp; levels</a>
       <a href="/support.html">Support</a>
-      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" rel="noopener">Get it on Google Play</a>
+      <a class="btn btn-amber" href="/app/">Get the app</a>
     </nav>
   </div>
 </header>
@@ -196,18 +150,13 @@
 <main>
 
   <!-- ============ HERO ============ -->
-  <section class="hero">
+  <section class="showcase on-dark">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Mac's Sports Playground · Sports prediction &amp; analysis</p>
+        <p class="eyebrow" style="color:var(--amber)">Mac's Sports Playground</p>
         <h1>Build your own pick system. Prove it against history.</h1>
-        <p class="lede">
-          Write the recipe your picks must match, backtest it across past seasons,
-          and let your locker find picks every day. An AI Buddy that knows the numbers,
-          with live scores, odds and prediction-market prices in one app.
-          NFL, NBA, MLB, NHL, college and soccer.
-        </p>
-        <div class="store-row">
+        <p class="lede">Write the rules your picks must match, backtest them across past seasons, and let your locker find picks every day. NFL, NBA, MLB, NHL, college and soccer.</p>
+        <div class="badges">
           <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" aria-label="Get it on Google Play" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
             <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
@@ -217,11 +166,16 @@
             <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
           </button>
         </div>
-        <p class="meta">Free to start · Ages 18+ · Available on Google Play in the United States</p>
+        <div class="qr">
+          <img src="/img/app/play-qr.svg" alt="QR code that opens Mac's Sports Playground on Google Play" width="96" height="96">
+          <p><b>Scan to get the app</b>Opens the Google Play listing on your phone.</p>
+        </div>
+        <p class="meta">Free to start · Ages 18+ · On Google Play in the United States</p>
       </div>
-      <div class="hero-visual">
-        <span class="caption">Dashboard</span>
-        <div class="phone"><img src="/img/app/dashboard.jpg" alt="The Mac's Sports Playground dashboard with quick actions, your teams and your games" width="600" height="1044"></div>
+      <div class="fan" aria-hidden="true">
+        <div class="device d-left"><img src="/img/app/screens/locker.jpg" alt="" width="640" height="1320"></div>
+        <div class="device d-center"><img src="/img/app/screens/backtest.jpg" alt="" width="640" height="1320"></div>
+        <div class="device d-right"><img src="/img/app/screens/live.jpg" alt="" width="640" height="1320"></div>
       </div>
     </div>
   </section>
@@ -239,55 +193,28 @@
   </section>
 
   <!-- ============ HOW IT WORKS ============ -->
-  <section id="how" class="soft rule-top">
+  <section id="how" class="soft">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">How it works</p>
         <h2>A pick system you can test before you trust it</h2>
-        <p class="muted">Most apps hand you someone else's picks. Mac's Sports Playground gives you the tools to build your own, check them against real seasons, and let them run.</p>
       </div>
       <div class="steps">
         <div class="step">
-          <span class="num">01 · Write</span>
+          <span class="num">1</span>
           <h3>Write the recipe</h3>
-          <p>Stack conditions on thousands of season-tagged stats. Build it three ways: a quick TLDR, the full wizard, or by chatting with the Trainer.</p>
+          <p>Stack conditions on thousands of season-tagged stats. Build it with a quick TLDR, the full wizard, or by chatting with the Trainer.</p>
         </div>
         <div class="step">
-          <span class="num">02 · Test</span>
-          <h3>Backtest it against past seasons</h3>
-          <p>Run the recipe against real past seasons, up to 20 deep depending on your level, and see how often it actually won before you ride it.</p>
+          <span class="num">2</span>
+          <h3>Backtest it</h3>
+          <p>Run the recipe against real past seasons, up to 20 deep depending on your level, and see how often it actually won.</p>
         </div>
         <div class="step">
-          <span class="num">03 · Run</span>
-          <h3>Let the locker find the picks</h3>
-          <p>Once you're happy, the locker scans every slate and surfaces every game that matches.</p>
+          <span class="num">3</span>
+          <h3>Let the locker run</h3>
+          <p>The locker scans every slate and surfaces every game that matches your rules.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ BACKTESTING ============ -->
-  <section id="backtest">
-    <div class="wrap spotlight">
-      <div class="copy">
-        <p class="eyebrow">Backtesting</p>
-        <h2>See how your recipe would have done. Before you trust it.</h2>
-        <p>Every locker can be run against real past seasons before it ever makes a pick. You get the record, the win rate, ROI and units, an edge score, and the full game-by-game log, so you know exactly what you are looking at.</p>
-        <div class="metrics">
-          <div><b>Record &amp; win rate</b><span>Wins and losses across every past game the recipe matched.</span></div>
-          <div><b>ROI &amp; units</b><span>What the recipe returned over the whole run, not just its best week.</span></div>
-          <div><b>Edge score</b><span>One number that weighs line value, win rate and volume, with the breakdown shown.</span></div>
-          <div><b>Game log</b><span>Every matched game with the date, the pick, the result and the units it returned.</span></div>
-        </div>
-        <p class="pull">A recipe that would have lost is worth knowing about before it makes a pick, not after.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/playground/features/#levels">Backtest depth by level</a>
-          <a class="btn btn-secondary" href="#how">How it works</a>
-        </div>
-      </div>
-      <div class="visual">
-        <span class="caption">Backtest results</span>
-        <div class="phone"><img src="/img/app/backtest.jpg" alt="Backtest results for an NFL recipe: record, win rate, ROI, units, edge score breakdown and the game log" width="600" height="1044" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -295,113 +222,71 @@
   <!-- ============ PRODUCT ============ -->
   <section id="product">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">What you can do</p>
-        <h2>Everything you need to find a better pick</h2>
-        <p class="muted">Real screens from the app. Every feature, level by level, is on the <a href="/playground/features/">features page</a>.</p>
-      </div>
 
-      <div class="feature-row">
+      <div class="split" id="backtest">
         <div class="copy">
-          <p class="eyebrow">Pick lockers &amp; backtesting</p>
-          <h3>Write the recipe. Test it. Let it find the picks.</h3>
-          <p>Stack conditions on thousands of season-tagged stats, then run the recipe against real past seasons to see how often it actually won, before you ride it. Once you're happy, the locker scans every slate for games that match.</p>
-          <ul>
-            <li>Build three ways: quick TLDR, the full wizard, or by chatting with the Trainer</li>
-            <li>Backtest up to 20 seasons deep, depending on your level</li>
-            <li>Automatic picks from your rules, for every game that qualifies</li>
-          </ul>
+          <p class="eyebrow">Backtesting</p>
+          <h2>See how your recipe would have done. Before you trust it.</h2>
+          <p>Every locker can run against real past seasons before it makes a single pick. A recipe that would have lost is worth knowing about before it picks, not after.</p>
+          <div class="metrics">
+            <div><b>Record &amp; win rate</b><span>Every past game the recipe matched.</span></div>
+            <div><b>ROI &amp; units</b><span>The whole run, not just the best week.</span></div>
+            <div><b>Edge score</b><span>Line value, win rate and volume in one number.</span></div>
+            <div><b>Game log</b><span>Date, pick, result and units for every game.</span></div>
+          </div>
         </div>
-        <div class="shots">
-          <div class="phone"><img src="/img/app/build-rules.jpg" alt="The recipe builder with rules and a stat picker" width="600" height="1044" loading="lazy"></div>
-          <div class="phone"><img src="/img/app/backtest.jpg" alt="Backtest results with record, win rate, ROI and the game log" width="600" height="1044" loading="lazy"></div>
-        </div>
+        <div class="device shot"><img src="/img/app/screens/backtest.jpg" alt="Backtest results for an NFL recipe: record, win rate, ROI, units, edge score breakdown and the game log" width="640" height="1320" loading="lazy"></div>
       </div>
 
-      <div class="feature-row flip">
+      <div class="split flip">
         <div class="copy">
           <p class="eyebrow">AI Buddy</p>
-          <h3>Ask anything. Get the numbers, not guesses.</h3>
-          <p>Your buddy runs on our MacRAG knowledge system on every level. Ask who's hot, who's hurt or who led the league last week, and it answers from real data.</p>
-          <ul>
+          <h2>Ask anything. Get the numbers, not guesses.</h2>
+          <p>Your Buddy runs on our MacRAG knowledge system on every level. Ask who's hot, who's hurt or who led the league last week.</p>
+          <ul class="ticks">
             <li>Pick a personality: the Hype Man, the Analyst, the Skeptic and more</li>
             <li>It remembers your teams and habits</li>
             <li>A daily brief on your teams, your picks and today's slate</li>
           </ul>
         </div>
-        <div class="shots">
-          <div class="phone"><img src="/img/app/buddy-chat.jpg" alt="Doc the buddy listing last week's top running backs" width="600" height="1044" loading="lazy"></div>
-          <div class="phone"><img src="/img/app/buddy-roster.jpg" alt="The buddy roster: Ace, Doc, Smooth, Sully, Blaze and more" width="600" height="1044" loading="lazy"></div>
-        </div>
+        <div class="device shot"><img src="/img/app/screens/buddy.jpg" alt="The AI Buddy listing the top five rushers in the league" width="640" height="1320" loading="lazy"></div>
       </div>
 
-      <div class="feature-row">
+      <div class="split">
         <div class="copy">
           <p class="eyebrow">Scores, stats &amp; trends</p>
-          <h3>Every game and every stat, all in one place.</h3>
-          <p>Live scores and box scores, matchup previews, injuries and decades of player and team history, with advanced stats and trend charts that show who's actually heating up.</p>
-          <ul>
-            <li>Live scores, quarter-by-quarter breakdowns and shot charts, in-game</li>
+          <h2>Every game and every stat, in one place.</h2>
+          <p>Live scores and box scores, matchup previews, injuries and decades of player and team history, with trend charts that show who's actually heating up.</p>
+          <ul class="ticks">
+            <li>Live, in-game updates with quarter breakdowns and shot charts</li>
             <li>Top players, rankings and standings for every team</li>
-            <li>Advanced stats and last-5 / last-10 trends</li>
+            <li>Plain-language reports, built fresh every night</li>
           </ul>
         </div>
-        <div class="shots">
-          <div class="phone"><img src="/img/app/live-game.jpg" alt="A live NBA game with the running score, quarter breakdown and shot chart" width="600" height="1044" loading="lazy"></div>
-          <div class="phone"><img src="/img/app/team-trends.jpg" alt="A team trends chart with top players" width="600" height="1044" loading="lazy"></div>
-        </div>
+        <div class="device shot"><img src="/img/app/screens/live.jpg" alt="A live NBA game with the running score, quarter breakdown and shot chart" width="640" height="1320" loading="lazy"></div>
       </div>
 
-      <div class="feature-row flip">
-        <div class="copy">
-          <p class="eyebrow">Reports</p>
-          <h3>The quick read before every game.</h3>
-          <p>Plain-language reports built fresh every night: what to know before a matchup, which way a player is trending, and whether your own picks are good or just lucky.</p>
-          <ul>
-            <li>Game, player, team and league reports</li>
-            <li>Your own numbers: My Picks and Team Line reports</li>
-            <li>An add-on pack for any paid level</li>
-          </ul>
-        </div>
-        <div class="shots">
-          <div class="phone"><img src="/img/app/reports.jpg" alt="The reports list: situational report, player snapshot, prop hit rate and my picks report" width="600" height="1044" loading="lazy"></div>
-        </div>
+      <div class="actions" style="justify-content:center;margin-top:88px">
+        <a class="btn btn-primary" href="/app/">See every screen</a>
+        <a class="btn btn-secondary" href="/playground/features/">All features</a>
       </div>
     </div>
   </section>
 
   <!-- ============ COVERAGE ============ -->
-  <section id="coverage" class="soft rule-top">
-    <div class="wrap coverage" style="margin-bottom:0">
-      <div>
+  <section id="coverage" class="soft">
+    <div class="wrap split">
+      <div class="copy">
         <p class="eyebrow">Coverage</p>
         <h2>The major US leagues, college, and soccer around the world</h2>
-        <p class="muted" style="margin-top:12px;max-width:52ch">Game history reaches back to 1869, with 3,000+ stat fields across the pro and college leagues to build picks on, and live, in-game updates for 48 leagues.</p>
-        <div class="actions" style="margin-top:24px">
-          <a class="btn btn-secondary" href="/playground/features/">See every feature</a>
+        <p>Game history back to 1869, 3,000+ stat fields across the pro and college leagues, and live, in-game updates for 48 leagues.</p>
+        <div class="leagues" aria-label="Leagues covered">
+          <span>NFL</span><span>NBA</span><span>MLB</span><span>NHL</span><span>College football</span><span>College basketball</span><span>Soccer in 85 countries</span><span>200+ leagues in all</span>
         </div>
       </div>
-      <div class="league-list" aria-label="Leagues covered">
-        <div><b>NFL</b><span>Pro football</span></div>
-        <div><b>College football</b><span>NCAA</span></div>
-        <div><b>NBA</b><span>Pro basketball</span></div>
-        <div><b>College basketball</b><span>NCAA</span></div>
-        <div><b>MLB</b><span>Pro baseball</span></div>
-        <div><b>NHL</b><span>Pro hockey</span></div>
-        <div><b>Soccer</b><span>Leagues and cups in 85 countries</span></div>
-        <div><b>And more</b><span>200+ leagues served, 48 with live updates</span></div>
-      </div>
-    </div>
-    <div class="wrap">
-      <div class="shot-strip" aria-label="Coverage screens">
-        <figure>
-          <div class="phone"><img src="/img/app/world.jpg" alt="The country picker, listing leagues available in the USA, Canada, Mexico, the UK, Spain, Germany, Italy, France and more" width="600" height="1044" loading="lazy"></div>
-          <figcaption><b>Pick a country</b>Leagues in 85 countries, filtered by sport</figcaption>
-        </figure>
-        <figure>
-          <div class="phone"><img src="/img/app/history.jpg" alt="The NFL teams screen with a season picker reaching back decades, plus top players and standings" width="600" height="1044" loading="lazy"></div>
-          <figcaption><b>Every season on record</b>Pick any year, back to 1869 where the history exists</figcaption>
-        </figure>
+      <div class="pair">
+        <div class="device"><img src="/img/app/screens/world.jpg" alt="The country picker, listing leagues available in the USA, Canada, Mexico, the UK, Spain, Germany, Italy, France and more" width="640" height="1320" loading="lazy"></div>
+        <div class="device" style="margin-top:48px"><img src="/img/app/screens/seasons.jpg" alt="The NFL teams screen with a season picker reaching back decades" width="640" height="1320" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -412,15 +297,15 @@
       <div class="section-head">
         <p class="eyebrow">Four levels</p>
         <h2>Start free. Go deeper when you're ready.</h2>
-        <p class="muted">Every level gets the AI buddy, the full stat history and pick lockers. Higher levels add more lockers, deeper backtests and sharper tools. Levels are purchased inside the app.</p>
+        <p class="muted">Every level gets the AI Buddy, the full stat history and pick lockers. Levels are purchased inside the app.</p>
       </div>
-      <div class="grid-4 levels">
-        <article class="card free"><h3>Role Player <span class="tag">Free</span></h3><p>Ad-supported. The AI buddy, stats for every team and player, two lockers and two-season backtests.</p></article>
-        <article class="card"><h3>Baller</h3><p>Ad-free. Advanced stats and trends, player and team props, ten lockers and five-season backtests.</p></article>
-        <article class="card"><h3>The Franchise</h3><p>EV% on every price, contracts and personalized news, thirty lockers and ten-season backtests.</p></article>
-        <article class="card capper"><h3>Capper's Delight</h3><p>Everything, plus the +EV Finder board, team payrolls, seventy-five lockers and twenty-season backtests.</p></article>
+      <div class="levels">
+        <article class="free"><h3>Role Player <span class="tag">Free</span></h3><p>Ad-supported. The AI Buddy, stats for every team and player, two lockers and two-season backtests.</p></article>
+        <article><h3>Baller</h3><p>Ad-free. Advanced stats and trends, player and team props, ten lockers and five-season backtests.</p></article>
+        <article><h3>The Franchise</h3><p>EV% on every price, contracts and personalized news, thirty lockers and ten-season backtests.</p></article>
+        <article class="capper"><h3>Capper's Delight</h3><p>Everything, plus the +EV Finder board, team payrolls, seventy-five lockers and twenty-season backtests.</p></article>
       </div>
-      <div class="actions" style="margin-top:28px">
+      <div class="actions" style="margin-top:40px">
         <a class="btn btn-primary" href="/playground/features/#compare">Compare every level</a>
         <a class="btn btn-secondary" href="/playground/features/#packs">Add-on packs</a>
       </div>
@@ -428,56 +313,37 @@
   </section>
 
   <!-- ============ TRUST ============ -->
-  <section class="soft rule-top">
+  <section class="soft tight">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Responsibility</p>
-        <h2>Clear terms, real data, and a team that answers</h2>
-      </div>
       <div class="trust">
-        <div class="card">
-          <h3>Information only</h3>
-          <p>Mac's Sports Playground is a sports prediction and analysis platform. It provides data, analysis and tools for your own picks.</p>
-          <a href="/terms">Read the Terms of Use</a>
-        </div>
-        <div class="card">
-          <h3>Ages 18+</h3>
-          <p>The app is for adults. Photo slip scanning is limited to users 21 and over.</p>
-          <a href="/terms">Age and eligibility</a>
-        </div>
-        <div class="card">
-          <h3>Your data, your choice</h3>
-          <p>A published privacy policy, and account deletion available from inside the app whenever you choose.</p>
-          <a href="/privacy">Privacy Policy</a>
-        </div>
-        <div class="card">
-          <h3>Support that reads every message</h3>
-          <p>We're a small team. When you write to support, the people who build the product read it.</p>
-          <a href="/support.html">Contact support</a>
-        </div>
+        <div><h3>Information only</h3><p>A sports prediction and analysis platform with data, analysis and tools for your own picks. <a href="/terms">Terms of Use</a></p></div>
+        <div><h3>Ages 18+</h3><p>The app is for adults. Photo slip scanning is limited to users 21 and over.</p></div>
+        <div><h3>Your data, your choice</h3><p>Delete your account from inside the app whenever you choose. <a href="/privacy">Privacy Policy</a></p></div>
+        <div><h3>A team that answers</h3><p>When you write to support, the people who build the product read it. <a href="/support.html">Contact support</a></p></div>
       </div>
     </div>
   </section>
 
   <!-- ============ CLOSING CTA ============ -->
-  <section class="band cta-band on-dark">
+  <section class="showcase on-dark get">
     <div class="wrap">
-      <div>
-        <p class="eyebrow">Get the app</p>
-        <h2>Build your first locker today.</h2>
-        <p>Free to start on Google Play. The App Store listing is coming soon. <button type="button" class="link-btn" data-signup data-interest="ios_launch" data-source="macletics-cta-text">Get an email when it lands.</button></p>
-        <p class="fine">Mac's Sports Playground is a sports prediction and analysis platform. Ages 18+.</p>
-      </div>
-      <div class="store-row">
-        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" aria-label="Get it on Google Play" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
-          <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
-        </a>
-        <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-appstore-cta" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
-        </button>
-      </div>
+      <h2>Build your first locker today.</h2>
+      <p class="sub">Free to start on Google Play. The App Store version is coming soon. <button type="button" class="link-btn" data-signup data-interest="ios_launch" data-source="macletics-cta-text">Get an email when it lands.</button></p>
+      <div class="badges">
+          <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.macletics.sportsbuddy" aria-label="Get it on Google Play" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.68.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+            <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
+          </a>
+          <button type="button" class="store-btn soon" data-signup data-interest="ios_launch" data-source="macletics-appstore-cta" data-joined-label="On the list for the" aria-label="App Store version coming soon. Get notified by email.">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="txt"><span class="small" data-signup-label>Coming soon · Get notified</span><span class="big">App Store</span></span>
+          </button>
+        </div>
+      <div class="qr">
+          <img src="/img/app/play-qr.svg" alt="QR code that opens Mac's Sports Playground on Google Play" width="96" height="96">
+          <p><b>Scan to get the app</b>Opens the Google Play listing on your phone.</p>
+        </div>
+      <p class="fine">Mac's Sports Playground is a sports prediction and analysis platform. Ages 18+.</p>
     </div>
   </section>
 
